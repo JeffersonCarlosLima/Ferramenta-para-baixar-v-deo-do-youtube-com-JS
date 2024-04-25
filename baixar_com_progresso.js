@@ -5,7 +5,7 @@ const ytdl = require('ytdl-core');
 const videoURL = 'https://youtu.be/TOUSnA1hZ_Y';
 
 // Diretório onde você deseja salvar o vídeo
-const outputDir = './download';
+const outputDir = '';
 
 // Obtenha informações sobre o vídeo
 ytdl.getInfo(videoURL).then(info => {

@@ -11,37 +11,43 @@
     <input type="text" id="link-video" placeholder="Link do vídeo">
     <button onclick="baixarVideo()">Baixar Vídeo</button>
 
-    <script>
-        function baixarVideo() {
-            let linkVideo = document.querySelector('#link-video').value;
+   <!-- ... (seu HTML) ... -->
 
-            fetch('http://localhost:3000/baixar-video', { // Altere para a porta correta do seu servidor Node.js
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ linkVideo: linkVideo })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erro ao baixar o vídeo');
-                }
-                return response.blob();
-            })
-            .then(blob => {
-                // Cria um link temporário para download do vídeo
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'video.mp4';
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-            })
-            .catch(error => {
-                console.error('Ocorreu um erro:', error);
-            });
-        }
-    </script>
+<script>
+    function baixarVideo() {
+        const linkVideo = document.querySelector('#link-video').value;
+
+        fetch('http://localhost:3000/baixar-video', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ linkVideo })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao baixar o vídeo. Verifique a URL do servidor.');
+            }
+            return response.blob();
+        })
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'video.mp4';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => {
+            console.error('Ocorreu um erro:', error);
+            // Exiba uma mensagem de erro para o usuário (pode ser um elemento <p> no HTML)
+            const errorMessage = document.createElement('p');
+            errorMessage.textContent = 'Erro ao baixar o vídeo. Verifique a URL do servidor.';
+            document.body.appendChild(errorMessage);
+        });
+    }
+</script>
+
 </body>
 </html>

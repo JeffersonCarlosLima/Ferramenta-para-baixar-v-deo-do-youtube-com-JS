@@ -2,7 +2,7 @@ const fs = require('fs');
 const ytdl = require('ytdl-core');
 
 // URL do vídeo do YouTube que você deseja baixar
-const videoURL = 'https://youtu.be/opG191wWuis';
+const videoURL = 'https://www.youtube.com/watch?v=_rmTFScrYdQ';
 
 // Diretório onde você deseja salvar o vídeo (certifique-se de que o diretório exista)
 const outputDir = './download';

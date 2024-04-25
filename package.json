@@ -1,6 +1,7 @@
 {
   "description": "",
   "dependencies": {
+    "clear": "^0.1.0",
     "ytdl-core": "^4.11.5"
   }
 }

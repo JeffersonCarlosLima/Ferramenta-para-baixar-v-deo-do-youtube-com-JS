@@ -34,10 +34,16 @@ ytdl.getInfo(videoURL).then(info => {
         console.log(`${((downloadedBytes / totalBytes) * 100).toFixed(2)}% baixado`);
     });
 
+    // Evento 'end' para lidar com o término do download
+    videoStream.on('end', () => {
+        console.log('Download concluído!');
+        // Adicione aqui o código para lidar com o que deve acontecer após o término do download
+        // Por exemplo, você pode adicionar código para fechar a stream de escrita ou realizar outras tarefas relacionadas ao download concluído.
+    });
+
     // Pipe a stream de leitura para a stream de escrita para iniciar o download
     videoStream.pipe(outputStream);
 
-    // Restante do código para lidar com o término do download, erros, etc., permanece o mesmo
 }).catch(error => {
     console.error('Ocorreu um erro ao obter informações sobre o vídeo:', error);
 });

@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/', (req, res) => {
-    res.send('Seu servidor está online.');
+    res.send('<h1>Seu servidor está online.</h1>');
 });
 
 app.post('/baixar-video', async (req, res) => {
@@ -15,8 +15,11 @@ app.post('/baixar-video', async (req, res) => {
         const linkVideo = req.body.linkVideo;
         const videoInfo = await ytdl.getInfo(linkVideo);
         const videoStream = ytdl(linkVideo, { quality: 'highestvideo' });
-        res.send(videoInfo.formats[0]); // Retorna a informação do vídeo
-        res.setHeader('Content-Disposition', `attachment; filename="${videoInfo.videoDetails.title}.mp4"`);
+
+        // Remove caracteres inválidos do título para uso no nome do arquivo
+        const safeTitle = videoInfo.videoDetails.title.replace(/[^\w\s]/gi, '');
+
+        res.setHeader('Content-Disposition', `attachment; filename="${safeTitle}.mp4"`);
         videoStream.pipe(res);
     } catch (error) {
         console.error('Erro ao baixar o vídeo:', error.message);

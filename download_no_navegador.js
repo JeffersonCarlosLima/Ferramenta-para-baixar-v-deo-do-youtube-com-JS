@@ -15,7 +15,7 @@ app.post('/baixar-video', async (req, res) => {
         const linkVideo = req.body.linkVideo;
         const videoInfo = await ytdl.getInfo(linkVideo);
         const videoStream = ytdl(linkVideo, { quality: 'highestvideo' });
-
+        res.send(videoInfo.formats[0]); // Retorna a informação do vídeo
         res.setHeader('Content-Disposition', `attachment; filename="${videoInfo.videoDetails.title}.mp4"`);
         videoStream.pipe(res);
     } catch (error) {
